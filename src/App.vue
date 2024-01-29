@@ -11,9 +11,13 @@ import CardSelection from '@/components/CardSelection.vue';
   </header>
   <main>
     <AmountFilter />
+
     <TransactionsOverview />
   </main>
 </template>
 
 <style scoped>
+header {
+  margin-bottom: 2.5rem;
+}
 </style>
