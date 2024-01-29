@@ -13,7 +13,7 @@ const id = useUID().generateId()
 </script>
 
 <template>
-  <SimpleCard class="card-view" :highlighted="isSelected">
+  <SimpleCard class="card-view" :highlighted="isSelected" @click="$emit('card-selected')">
     <input
         type="radio"
         :id="`card-${id}`"
