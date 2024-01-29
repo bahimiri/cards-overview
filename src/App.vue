@@ -7,7 +7,6 @@ import CardSelection from '@/components/CardSelection.vue';
 <template>
   <header>
     <h1>Transaction Overview</h1>
-    <p>Choose the card for which you want to see your transactions:</p>
     <CardSelection />
   </header>
   <main>

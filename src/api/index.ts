@@ -16,7 +16,7 @@ export async function getCards(): Promise<Card[]> {
   return cards;
 }
 
-export async function getTransactions(cardId: string): Promise<Card[]> {
+export async function getTransactions(cardId: string): Promise<Transaction[]> {
   const transactions: Record<string, Transaction[]> = await (
     await import("./data/transactions.json")
   ).default;

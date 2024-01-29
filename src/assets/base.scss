@@ -1,3 +1,19 @@
+:root {
+  --color-primary: #C6EBFF;
+  --color-secondary: #EBEBEB;
+  --color-foreground: #262524;
+  --color-background: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #095B86;
+    --color-secondary: #4A4D4F;
+    --color-foreground: white;
+    --color-background: #262524;
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -8,9 +24,8 @@
 
 body {
   min-height: 100vh;
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  color: var(--color-foreground);
+  background: var(--color-background);
   line-height: 1.6;
   font-family:
     Inter,
