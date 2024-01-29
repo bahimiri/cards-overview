@@ -5,7 +5,7 @@ import SimpleCard from '@/components/SimpleCard.vue';
 import AmountFilter from '@/components/AmountFilter.vue';
 
 const cardsStore = useCardsStore()
-const { transactions } = storeToRefs(cardsStore)
+const { filteredTransactions } = storeToRefs(cardsStore)
 
 const amountFormatter = new Intl.NumberFormat(navigator.language, {
   style: 'currency',
@@ -20,7 +20,7 @@ const amountFormatter = new Intl.NumberFormat(navigator.language, {
     <AmountFilter />
 
     <ul class="transactions-overview" aria-live="polite">
-      <li v-for="transaction in transactions" :key="transaction.id">
+      <li v-for="transaction in filteredTransactions" :key="transaction.id">
         <SimpleCard>
           <div class="transaction">
             <span>{{ transaction.description }}</span>
