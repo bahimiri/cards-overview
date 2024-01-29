@@ -13,9 +13,13 @@
 <script setup lang="ts">
 import { useCardsStore } from '@/stores/cards';
 import useUID from '@/composables/useUID';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const filterValue = ref(0)
+const cardsStore = useCardsStore()
+watch(() => cardsStore.transactionFilterValue, (value) => {
+  filterValue.value = value
+})
 const filterTransactions = () => {
   useCardsStore().setFilterValue(filterValue.value)
 }
