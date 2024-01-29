@@ -36,6 +36,7 @@ const id = useUID().generateId()
 
   &:focus-within {
     outline: 2px dashed var(--color-foreground);
+    outline-offset: 4px;
   }
 
   input[type="radio"] {
