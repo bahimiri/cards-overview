@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Card, Transaction } from '@/api';
 import { getCards, getTransactions } from '@/api';
@@ -20,6 +20,14 @@ export const useCardsStore = defineStore('cards', () => {
     }
   }
 
+  const selectCard = async (card: Card | null): Promise<void> => {
+    selectedCard.value = card;
+    setFilterValue(0)
+    if (card) {
+      await fetchTransactions(card.id)
+    }
+  }
+
   const transactions = ref<Array<Transaction>>([])
   const fetchTransactions = async (cardId: string): Promise<void> => {
     try {
@@ -30,18 +38,21 @@ export const useCardsStore = defineStore('cards', () => {
     }
   }
 
-  const selectCard = async (card: Card | null): Promise<void> => {
-    selectedCard.value = card;
-    if (card) {
-      await fetchTransactions(card.id)
-    }
+  const transactionFilterValue = ref(0)
+  const setFilterValue = (value: number | null) => {
+    transactionFilterValue.value = value || 0
   }
+  const filteredTransactions = computed(() => {
+    return transactions.value.filter(transaction => transaction.amount >= transactionFilterValue.value)
+  })
 
   return {
     cards,
     fetchCards,
     selectedCard,
     selectCard,
-    transactions,
+    filteredTransactions,
+    transactionFilterValue,
+    setFilterValue,
   }
 })

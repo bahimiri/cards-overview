@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AmountFilter from '@/components/AmountFilter.vue';
 import TransactionsOverview from '@/components/TransactionsOverview.vue';
 import CardSelection from '@/components/CardSelection.vue';
 </script>
@@ -10,8 +9,6 @@ import CardSelection from '@/components/CardSelection.vue';
     <CardSelection />
   </header>
   <main>
-    <AmountFilter />
-
     <TransactionsOverview />
   </main>
 </template>

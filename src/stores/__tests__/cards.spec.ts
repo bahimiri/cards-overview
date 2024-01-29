@@ -46,12 +46,14 @@ describe('store: cards', () => {
 
   describe('.selectCard', () => {
 
-    it('updates selected card', () => {
+    it('updates selected card and resets filter value', () => {
       cardsStore.selectedCard = null
+      cardsStore.transactionFilterValue = 40
       const card = { id: '1', description: 'desc1' };
       cardsStore.selectCard(card)
 
       expect(cardsStore.selectedCard).toEqual(card)
+      expect(cardsStore.transactionFilterValue).toEqual(0)
     })
 
     it('fetches transactions if a card is set', async () => {
@@ -60,7 +62,7 @@ describe('store: cards', () => {
       const card = { id: '1', description: 'desc1' };
       await cardsStore.selectCard(card)
 
-      expect(cardsStore.transactions).toEqual(transactions)
+      expect(cardsStore.filteredTransactions).toEqual(transactions)
     })
 
     it('does not fetch transactions if card is reset', async () => {
@@ -75,13 +77,47 @@ describe('store: cards', () => {
       ;(getTransactions as MockedFunction<typeof getTransactions>).mockResolvedValueOnce(transactions)
       const card = { id: '1', description: 'desc1' };
       await cardsStore.selectCard(card)
-      expect(cardsStore.transactions.length).toBeGreaterThan(0)
+      expect(cardsStore.filteredTransactions.length).toBeGreaterThan(0)
 
       ;(getTransactions as MockedFunction<typeof getTransactions>).mockImplementation(() => {
         throw new Error('test error')
       })
       await cardsStore.selectCard(card)
-      expect(cardsStore.transactions.length).toBe(0)
+      expect(cardsStore.filteredTransactions.length).toBe(0)
+    })
+  })
+
+  describe('.setFilterValue', () => {
+    it('filters transactions for those with given minimum amount', async () => {
+      const transactions = [
+          { id: '1', description: 'desc1', amount: 100 },
+          { id: '2', description: 'desc2', amount: 200 },
+          { id: '3', description: 'desc3', amount: 300 }
+        ]
+      ;(getTransactions as MockedFunction<typeof getTransactions>).mockResolvedValue(transactions)
+      const card = { id: '1', description: 'desc1' };
+      await cardsStore.selectCard(card)
+
+      cardsStore.setFilterValue(200)
+
+      expect(cardsStore.filteredTransactions).toEqual([
+        { id: '2', description: 'desc2', amount: 200 },
+        { id: '3', description: 'desc3', amount: 300 }
+      ])
+    })
+
+    it('does not filter transactions if filter value is set to null', async () => {
+      const transactions = [
+          { id: '1', description: 'desc1', amount: 100 },
+          { id: '2', description: 'desc2', amount: 200 }
+        ]
+      ;(getTransactions as MockedFunction<typeof getTransactions>).mockResolvedValue(transactions)
+      const card = { id: '1', description: 'desc1' };
+      await cardsStore.selectCard(card)
+
+      cardsStore.setFilterValue(null)
+
+      expect(cardsStore.filteredTransactions).toEqual(transactions)
     })
   })
 
