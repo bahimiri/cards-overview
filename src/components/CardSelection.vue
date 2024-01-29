@@ -14,10 +14,14 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div>
+  <fieldset>
+    <legend>Choose the card for which you want to see your transactions:</legend>
+
     <CardView v-for="card in cards"
+              :key="card.id"
               :card="card"
-              />
-  </div>
+              radio-group-name="cards-selection"
+    />
+  </fieldset>
 </template>
 
