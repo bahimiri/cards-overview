@@ -1,8 +1,12 @@
 <template>
   <div class="amount-filter">
-    <p>You can filter transactions by entering a minimum amount.</p>
+    <p>You can optionally filter transactions by entering a minimum amount.</p>
     <label :for="id">Minimum transaction amount</label>
-    <input v-model="filterValue" type="number" :id="id" @input="filterTransactions()">
+    <input
+        v-model="filterValue"
+        type="number"
+        :id="id"
+        @input="filterTransactions()">
   </div>
 </template>
 
@@ -16,14 +20,28 @@ const filterTransactions = () => {
   useCardsStore().setFilterValue(filterValue.value)
 }
 
-const id = `input-${useUID().generateId()}`
+const id = `input-${ useUID().generateId() }`
 
 </script>
 
 <style lang="scss" scoped>
+@import "src/assets/variables";
+
 .amount-filter {
+  margin-bottom: 2.5rem;
+
   label {
     display: block;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 16px 24px;
+    border-radius: $border-radius-sm;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    border-color: var(--color-foreground);
   }
 
   p {
