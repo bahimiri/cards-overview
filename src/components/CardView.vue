@@ -4,6 +4,7 @@ import useUID from '@/composables/useUID';
 
 defineProps<{
   card: Card,
+  isSelected: boolean,
   radioGroupName: string
 }>()
 
@@ -16,6 +17,9 @@ const id = useUID().generateId()
       :id="`card-${id}`"
       :name="radioGroupName"
       :aria-describedby="`card-desc-${id}`"
+      :value="card.id"
+      :checked="isSelected"
+      @input="$emit('card-selected')"
   />
   <label :for="`card-${id}`">{{ card.description }}</label>
   <div :id="`card-desc-${id}`">{{ card.id }}</div>

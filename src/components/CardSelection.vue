@@ -5,7 +5,7 @@ import { onBeforeMount } from 'vue';
 import CardView from './CardView.vue';
 
 const cardsStore = useCardsStore()
-const { cards } = storeToRefs(cardsStore)
+const { cards, selectedCard } = storeToRefs(cardsStore)
 
 onBeforeMount(async () => {
   await cardsStore.fetchCards()
@@ -20,7 +20,9 @@ onBeforeMount(async () => {
     <CardView v-for="card in cards"
               :key="card.id"
               :card="card"
+              :is-selected="card.id === selectedCard?.id"
               radio-group-name="cards-selection"
+              @card-selected="cardsStore.selectCard(card)"
     />
   </fieldset>
 </template>
