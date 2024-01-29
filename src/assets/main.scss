@@ -1,0 +1,9 @@
+@import 'base.scss';
+@import 'variables.scss';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  font-weight: normal;
+}

@@ -15,7 +15,7 @@ onBeforeMount(async () => {
 
 <template>
   <fieldset>
-    <legend>Choose the card for which you want to see your transactions:</legend>
+    <legend>Choose the card for which you want to see your transactions</legend>
 
     <CardView v-for="card in cards"
               :key="card.id"
@@ -27,3 +27,24 @@ onBeforeMount(async () => {
   </fieldset>
 </template>
 
+<style scoped lang="scss">
+@import "src/assets/variables.scss";
+
+fieldset {
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: $bp-m) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  legend {
+    margin-bottom: 0.5rem;
+  }
+}
+
+</style>
